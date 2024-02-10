@@ -45,3 +45,7 @@ group :development do
   # gem "spring"
 end
 
+# HTTP Client and Circuit Breaker dependecies
+gem "faraday", "~> 2.9"
+
+gem "faulty", "~> 0.11.0"
