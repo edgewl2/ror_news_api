@@ -1,0 +1,43 @@
+version: "3.9"
+
+networks:
+  rails-postgres-nt:
+    driver: bridge
+
+volumes:
+  postgres-data-vl:
+
+services:
+  api:
+    build: .
+    image: edgewl2/rails:latest
+    container_name: rails-ct
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - POSTGRES_HOST=db
+    restart: always
+    tty: true
+    stdin_open: true
+    networks:
+      - rails-postgres-nt
+    ports:
+      - '3000:3000'
+      - '443:443'
+    volumes:
+      - .:/docker/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: postgres-ct
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=test
+    ports:
+      - '5432:5432'
+    networks:
+      - rails-postgres-nt
+    volumes:
+      - postgres-data-vl:/var/lib/postgresql/data
