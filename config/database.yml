@@ -84,5 +84,3 @@ test:
 production:
   <<: *default
   database: ms_news_production
-  username: ms_news
-  password: <%= ENV["MS_NEWS_DATABASE_PASSWORD"] %>
